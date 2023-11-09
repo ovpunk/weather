@@ -101,7 +101,7 @@ const generateIndicators = (data) => {
   </ul>
   `;
 };
-
+//Иконки и фон по результату запроса
 const imgValue = {
   "Patchy rain possible": "patchyrain",
   "Light rain shower": "patchyrain",
@@ -175,27 +175,28 @@ const generateWeatherForWeek = (data) => {
   return generatedHTML.join("");
 };
 
-//Начальное значение
-//const geoFetch = () => {
-//  fetch("https://ipapi.co/json/")
-//    .then((res) => {
-//      return res.json();
-//    })
-//    .then((data) => {
-//      return data.city;
-//    });
-//};
-//console.log(geoFetch());
-
-let city = "Moscow";
-const initialCity = () => {
-  const cityFetch = `http://api.weatherapi.com/v1/forecast.json?key=678132e53e6a4ab1b73121541230611&q=${city}&days=7`;
+//Найти город по ip
+const getMyCity = async () => {
+  const res = await fetch("https://ipapi.co/json/");
+  if (res.ok) {
+    const responce = await res.json();
+    const city = responce.city;
+    return city;
+  }
+};
+let myCity = "";
+let flag = false;
+//Запрос на получение погоды в городе
+const initialCity = async () => {
+  if (flag === false) {
+    myCity = await getMyCity();
+  }
+  const cityFetch = `http://api.weatherapi.com/v1/forecast.json?key=678132e53e6a4ab1b73121541230611&q=${myCity}&days=7`;
   fetch(cityFetch)
     .then((res) => {
       return res.json();
     })
     .then((data) => {
-      //console.log("data", data);
       $weather.innerHTML = generateWeather(data);
       $indicators.innerHTML = generateIndicators(data);
       $weatherToday.innerHTML = generateWeatherForDay(data);
@@ -252,11 +253,11 @@ const chooseCity = (data) => {
   $searchResultItem.forEach((el) => {
     el.addEventListener("click", () => {
       console.log(el.innerText.split(",")[0]);
-      city = el.innerText.split(",")[0];
+      myCity = el.innerText.split(",")[0];
       $input.value = "";
       $searchResult.style.display = "none";
+      flag = true;
       initialCity();
     });
   });
 };
-//"https://ipapi.co/json/"
