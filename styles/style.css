@@ -213,15 +213,9 @@ body {
 }
 
 .search-btn {
-  background-color: transparent;
-  border: none;
-  outline: none;
-  cursor: pointer;
   position: absolute;
   top: 20px;
   right: 120px;
-}
-.search-btn img {
   width: 20px;
   height: 20px;
 }
@@ -311,10 +305,12 @@ body {
   color: #fff;
   z-index: 4;
   position: relative;
+  width: 50%;
 }
 @media (max-width: 992px) {
   .weather {
     min-height: 100vh;
+    width: 100%;
   }
 }
 .weather .weather__value {
@@ -348,6 +344,10 @@ body {
     font-size: 14px;
   }
 }
+.weather .weather__img {
+  width: 70px;
+  height: 70px;
+}
 @media (max-width: 992px) {
   .weather .weather__img {
     width: 55px;
@@ -362,6 +362,7 @@ body {
 }
 
 .weather-wrapper {
+  width: 100%;
   position: absolute;
   bottom: 45px;
   left: 0;

@@ -11,7 +11,6 @@ const $weatherWeek = document.querySelector(".weather-week__list");
 const $bgImg = document.querySelector(".bg-img");
 const $searchResult = document.querySelector(".search-result");
 const $searchResultList = document.querySelector(".search-result__list");
-const $searchResultItem = document.querySelector(".search-result__item");
 
 const currentTime = new Date().getTime() / 1000;
 
@@ -46,6 +45,8 @@ const generateBackground = (data) => {
   $bgImg.style.backgroundImage = imgSrc;
 };
 const generateWeather = (data) => {
+  const weatherDescription = data.current.condition.text;
+  const imgSrc = `images/${imgValue[weatherDescription]}.svg`;
   return `
       <div class="weather-wrapper">
          <p class="weather__value">${Math.ceil(data.current.temp_c)}°</p>
@@ -53,7 +54,7 @@ const generateWeather = (data) => {
             <p class="weather__data-city">${data.location.name}</p>
             <p class="weather__data-date">${data.location.localtime}</p>
           </div>
-         <img src="/images/cloud.svg" alt="" class="weather__img">
+         <img src=${imgSrc} alt="" class="weather__img">
       </div>
       `;
 };
@@ -121,6 +122,11 @@ const imgValue = {
   Sunny: "clear",
   "Moderate rain": "patchyrain",
   "Moderate or heavy rain with thunder": "rainthunder",
+  "Patchy light drizzle": "patchyrain",
+  "Heavy rain": "patchyrain",
+  "Moderate snow": "snow",
+  "Heavy snow": "snow",
+  Blizzard: "blizzard",
 };
 
 const generateWeatherForDay = (data) => {
@@ -170,8 +176,20 @@ const generateWeatherForWeek = (data) => {
 };
 
 //Начальное значение
+//const geoFetch = () => {
+//  fetch("https://ipapi.co/json/")
+//    .then((res) => {
+//      return res.json();
+//    })
+//    .then((data) => {
+//      return data.city;
+//    });
+//};
+//console.log(geoFetch());
+
+let city = "Moscow";
 const initialCity = () => {
-  const cityFetch = `http://api.weatherapi.com/v1/forecast.json?key=678132e53e6a4ab1b73121541230611&q=magnitogorsk&days=7`;
+  const cityFetch = `http://api.weatherapi.com/v1/forecast.json?key=678132e53e6a4ab1b73121541230611&q=${city}&days=7`;
   fetch(cityFetch)
     .then((res) => {
       return res.json();
@@ -187,33 +205,21 @@ const initialCity = () => {
 };
 initialCity();
 
-//Обновление начальных данных каждые пол минуту
+//Обновление начальных данных каждые пол минуты
 setInterval(() => {
   initialCity();
 }, 30000);
 
-//////////////////////////////////////////
-form.onsubmit = (e) => {
-  e.preventDefault();
-  let city = $input.value.trim();
-  const cityFetch = `http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}`;
-  fetch(cityFetch)
-    .then((res) => {
-      return res.json();
-    })
-    .then((data) => {
-      console.log(data);
-    });
-};
-
+//Создание списка городов при поиске
 const generateSearchResult = (data) => {
   const generatedHTML = data.map((el) => {
-    return `<li class="search-result__item">${el.name}, ${el.country}</li>`;
+    return `<li class="search-result__item" >${el.name}, ${el.country}</li>`;
   });
   return generatedHTML.join("");
 };
 
 let typingTimer; // Переменная для хранения таймера
+//функция поиска городов
 const debounce = () => {
   const inputValue = $input.value;
   clearTimeout(typingTimer);
@@ -226,9 +232,7 @@ const debounce = () => {
           return res.json();
         })
         .then((data) => {
-          console.log(data);
-          $searchResultList.innerHTML = generateSearchResult(data);
-
+          chooseCity(data);
           // Если есть текст, делаем элемент видимым
           if (data.length > 0) {
             $searchResult.style.display = "block";
@@ -241,3 +245,18 @@ const debounce = () => {
 };
 
 $input.addEventListener("input", debounce);
+// функция выбора города
+const chooseCity = (data) => {
+  $searchResultList.innerHTML = generateSearchResult(data);
+  const $searchResultItem = document.querySelectorAll(".search-result__item");
+  $searchResultItem.forEach((el) => {
+    el.addEventListener("click", () => {
+      console.log(el.innerText.split(",")[0]);
+      city = el.innerText.split(",")[0];
+      $input.value = "";
+      $searchResult.style.display = "none";
+      initialCity();
+    });
+  });
+};
+//"https://ipapi.co/json/"
