@@ -183,6 +183,8 @@ const getMyCity = async () => {
     const responce = await res.json();
     const city = responce.city;
     return city;
+  } else {
+    return "Dortmund";
   }
 };
 
@@ -205,7 +207,6 @@ const initialCity = async () => {
       return res.json();
     })
     .then((data) => {
-      console.log(data);
       localStorage.setItem("location", `${data.location.name}`);
       localStorage.setItem("description", `${data.current.condition.text}`);
       $weather.innerHTML = generateWeather(data);
@@ -263,7 +264,6 @@ const chooseCity = (data) => {
   const $searchResultItem = document.querySelectorAll(".search-result__item");
   $searchResultItem.forEach((el) => {
     el.addEventListener("click", () => {
-      console.log(el.innerText.split(",")[0]);
       myCity = el.innerText.split(",")[0];
       onSearch = true;
       $input.value = "";
