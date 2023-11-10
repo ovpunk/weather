@@ -127,6 +127,7 @@ const imgValue = {
   "Moderate snow": "snow",
   "Heavy snow": "snow",
   Blizzard: "blizzard",
+  "Moderate or heavy snow showers": "snow",
 };
 
 const generateWeatherForDay = (data) => {
@@ -184,19 +185,29 @@ const getMyCity = async () => {
     return city;
   }
 };
-let myCity = "";
-let flag = false;
+
+let myCity;
+let onSearch = false;
 //Запрос на получение погоды в городе
 const initialCity = async () => {
-  if (flag === false) {
+  const savedCity = localStorage.getItem("location");
+  if (!savedCity) {
     myCity = await getMyCity();
+  } else if (myCity !== savedCity && onSearch) {
+    myCity = myCity;
+  } else {
+    myCity = savedCity;
   }
+
   const cityFetch = `http://api.weatherapi.com/v1/forecast.json?key=678132e53e6a4ab1b73121541230611&q=${myCity}&days=7`;
   fetch(cityFetch)
     .then((res) => {
       return res.json();
     })
     .then((data) => {
+      console.log(data);
+      localStorage.setItem("location", `${data.location.name}`);
+      localStorage.setItem("description", `${data.current.condition.text}`);
       $weather.innerHTML = generateWeather(data);
       $indicators.innerHTML = generateIndicators(data);
       $weatherToday.innerHTML = generateWeatherForDay(data);
@@ -254,6 +265,7 @@ const chooseCity = (data) => {
     el.addEventListener("click", () => {
       console.log(el.innerText.split(",")[0]);
       myCity = el.innerText.split(",")[0];
+      onSearch = true;
       $input.value = "";
       $searchResult.style.display = "none";
       flag = true;
