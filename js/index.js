@@ -123,6 +123,7 @@ const imgValue = {
   "Moderate rain": "patchyrain",
   "Moderate or heavy rain with thunder": "rainthunder",
   "Patchy light drizzle": "patchyrain",
+  "Patchy rain nearby": "patchyrain",
   "Heavy rain": "patchyrain",
   "Moderate snow": "snow",
   "Heavy snow": "snow",
@@ -133,7 +134,7 @@ const imgValue = {
 const generateWeatherForDay = (data) => {
   const remainingHours = filterHours(data);
   const generatedHTML = remainingHours.map((hour) => {
-    const weatherDescription = hour.condition.text;
+    const weatherDescription = hour.condition.text.trim();
     const imgSrc = `images/${imgValue[weatherDescription]}.svg`;
     return `
     <li class="weather-today__item">
@@ -184,7 +185,7 @@ const getMyCity = async () => {
     const city = responce.city;
     return city;
   } else {
-    return "Dortmund";
+    return "Moscow";
   }
 };
 
