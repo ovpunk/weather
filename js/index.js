@@ -46,7 +46,7 @@ const generateBackground = (data) => {
 };
 const generateWeather = (data) => {
   const weatherDescription = data.current.condition.text;
-  const imgSrc = `images/${imgValue[weatherDescription]}.svg`;
+  const imgSrc = `https://ovpunk.github.io/weather/images/${imgValue[weatherDescription]}.svg`;
   return `
       <div class="weather-wrapper">
          <p class="weather__value">${Math.ceil(data.current.temp_c)}°</p>
