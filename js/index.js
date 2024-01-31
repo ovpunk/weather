@@ -110,7 +110,7 @@ const imgValue = {
   Overcast: "cloud",
   Snow: "snow",
   Clear: "clear",
-  "Partly cloudy": "cloud",
+  "Partly Cloudy": "cloud",
   Mist: "mist",
   "Freezing fog": "mist",
   Fog: "mist",
@@ -155,7 +155,7 @@ const generateWeatherForDay = (data) => {
 
 const generateWeatherForWeek = (data) => {
   const generatedHTML = data.forecast.forecastday.map((day) => {
-    const weatherDescription = day.day.condition.text;
+    const weatherDescription = day.day.condition.text.trim();
     const imgSrc = `images/${imgValue[weatherDescription]}.svg`;
     const date = new Date(day.date);
     const options = { weekday: "long" };
