@@ -67,35 +67,35 @@ const generateIndicators = (data) => {
       <p>Temp max</p>
       <div>
         <span>${Math.ceil(data.forecast.forecastday[0].day.maxtemp_c)}°</span>
-        <img src="weather/images/max-temp.svg" alt="" class="indicators__img">
+        <img src="https://ovpunk.github.io/weather/images/max-temp.svg" alt="" class="indicators__img">
       </div>
     </li>
     <li class="indicators__list-item">
       <p>Temp min</p>
       <div>
         <span>${Math.ceil(data.forecast.forecastday[0].day.mintemp_c)}°</span>
-        <img src="weather/images/min-temp.svg" alt="" class="indicators__img">
+        <img src="https://ovpunk.github.io/weather/images/min-temp.svg" alt="" class="indicators__img">
       </div>
     </li>
     <li class="indicators__list-item">
      <p>Humidity</p>
       <div>
         <span>${data.current.humidity}%</span>
-        <img src="weather/images/humidity.svg" alt="" class="indicators__img">
+        <img src="https://ovpunk.github.io/weather/images/humidity.svg" alt="" class="indicators__img">
       </div>
     </li>
     <li class="indicators__list-item">
       <p>Cloudy</p>
       <div>
         <span>${data.current.cloud}%</span>
-        <img src="weather/images/cloud.svg" alt="" class="indicators__img">
+        <img src="https://ovpunk.github.io/weather/images/cloud.svg" alt="" class="indicators__img">
       </div>
     </li>
     <li class="indicators__list-item">
       <p>Wind</p>
       <div>
         <span>${data.current.wind_kph}km/h</span>
-        <img src="weather/images/wind.svg" alt="" class="indicators__img">
+        <img src="https://ovpunk.github.io/weather/images/wind.svg" alt="" class="indicators__img">
       </div>
     </li>
   </ul>
