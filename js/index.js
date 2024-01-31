@@ -202,7 +202,7 @@ const initialCity = async () => {
     myCity = savedCity;
   }
 
-  const cityFetch = `http://api.weatherapi.com/v1/forecast.json?key=678132e53e6a4ab1b73121541230611&q=${myCity}&days=7`;
+  const cityFetch = `https://api.weatherapi.com/v1/forecast.json?key=678132e53e6a4ab1b73121541230611&q=${myCity}&days=7`;
   fetch(cityFetch)
     .then((res) => {
       return res.json();
@@ -240,7 +240,7 @@ const debounce = () => {
   if (inputValue.trim() !== "") {
     typingTimer = setTimeout(() => {
       fetch(
-        `http://api.weatherapi.com/v1/search.json?key=678132e53e6a4ab1b73121541230611&q=${inputValue}`
+        `https://api.weatherapi.com/v1/search.json?key=678132e53e6a4ab1b73121541230611&q=${inputValue}`
       )
         .then((res) => {
           return res.json();
