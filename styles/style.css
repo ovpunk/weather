@@ -270,12 +270,18 @@ body {
   display: flex;
   justify-content: space-between;
   height: 100%;
+  overflow-x: hidden;
 }
 @media (max-width: 992px) {
   .main__inner {
     flex-direction: column;
     overflow-y: scroll;
+    padding-right: 0;
   }
+}
+
+.main__inner::-webkit-scrollbar {
+  display: none;
 }
 
 .container {
@@ -493,6 +499,7 @@ body {
 }
 
 .bg-img {
+  transition: background-image 0.5s ease-in-out;
   position: absolute;
   top: 0;
   left: 0;

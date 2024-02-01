@@ -40,12 +40,12 @@ const filterHours = (data) => {
 };
 
 const generateBackground = (data) => {
-  const weatherDescription = data.current.condition.text;
+  const weatherDescription = data.current.condition.text.trim();
   const imgSrc = `url(images/${imgValue[weatherDescription]}.jpg)`;
   $bgImg.style.backgroundImage = imgSrc;
 };
 const generateWeather = (data) => {
-  const weatherDescription = data.current.condition.text;
+  const weatherDescription = data.current.condition.text.trim();
   const imgSrc = `https://ovpunk.github.io/weather/images/${imgValue[weatherDescription]}.svg`;
   return `
       <div class="weather-wrapper">
@@ -123,6 +123,8 @@ const imgValue = {
   "Moderate rain": "patchyrain",
   "Moderate or heavy rain with thunder": "rainthunder",
   "Patchy light drizzle": "patchyrain",
+  "Patchy light snow": "snow",
+  "Blowing snow": "snow",
   "Patchy rain nearby": "patchyrain",
   "Heavy rain": "patchyrain",
   "Moderate snow": "snow",
