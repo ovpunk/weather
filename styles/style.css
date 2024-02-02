@@ -380,11 +380,13 @@ body {
 @media (max-width: 992px) {
   .weather-wrapper {
     left: 40px;
+    bottom: 70px;
   }
 }
 @media (max-width: 576px) {
   .weather-wrapper {
     left: 20px;
+    bottom: 120px;
   }
 }
 
