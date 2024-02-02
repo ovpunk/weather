@@ -306,9 +306,11 @@ body {
   gap: 10px;
   @media (max-width: 992px) {
     left: 40px;
+    bottom: 70px;
   }
   @media (max-width: 576px) {
     left: 20px;
+    bottom: 120px;
   }
 }
 
